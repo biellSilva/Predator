@@ -155,3 +155,4 @@ config.py
 discloud.config
 Extensions2
 discloud_backup
+*.json
