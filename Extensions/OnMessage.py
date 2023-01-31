@@ -120,6 +120,7 @@ class onMessage(commands.Cog):
                     else:
                         await message.reply(file=discord.File(arquivoNada()))
                         break
+            return
 
         if message.channel.id == config.sugest:
             sugest = guild.get_channel(config.sugest)
@@ -134,6 +135,23 @@ class onMessage(commands.Cog):
             await msg_1.add_reaction("👍")
             await msg_1.add_reaction("👎")
             await message.delete()
+            return
+
+        if message.channel.id == config.sugest_nomes:
+            sugest = guild.get_channel(config.sugest_nomes)
+            em = discord.Embed(title="Sugestão para nomeação da aliança e clãs",
+                               color=roxo,
+                               description=f"Sugestão de {message.author.mention}:\n"
+                                           f"||autor: {message.author} - {message.author.id}||\n\n"
+                                           f"{message.content}",
+                                           timestamp=datetime.now(tz=tz_brazil))
+            em.set_footer(text="Reaja com base na sua decisão",
+                          icon_url=guild.icon)
+            msg_1 = await sugest.send(embed=em)
+            await msg_1.add_reaction("👍")
+            await msg_1.add_reaction("👎")
+            await message.delete()
+            return
 
 
 async def setup(bot):
