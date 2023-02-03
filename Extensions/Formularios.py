@@ -1,6 +1,7 @@
 import discord
 import datetime
 import config
+import random
 
 from discord.ext import commands, tasks
 from discord import app_commands, Interaction
@@ -112,9 +113,14 @@ class Formularios(commands.GroupCog, name='forms'):
         guild = self.bot.get_guild(config.uniao)
         warframe_chat = guild.get_channel(config.warframe_chat)
 
-        em = discord.Embed(color=config.roxo,
-                           description='Aos membros da União Cósmica com objetivo de colaborar com o desenvolvimento dos clãs e da aliança de diversas formas.\n'
-                           'Clique aqui -> </forms exame:1042305650472005716>',
+        txt_1 = ('Interessado em Ajudar a Aliança? Estamos procurando por jogadores que desejam contribuir para a comununidade, jogadores que possam participar efetivamente na aliança e ajudar outros jogadores.\n'
+                'Faça o Exame Cósmico -> </forms exame:1042305650472005716>')
+
+        txt_2 = ('Aos membros da União Cósmica com objetivo de colaborar com o desenvolvimento dos clãs e da aliança de diversas formas.\n'
+                 'Clique aqui -> </forms exame:1042305650472005716>')
+
+        em = discord.Embed(color=config.cinza,
+                           description=random.choice([txt_1, txt_2]),
                            timestamp=datetime.datetime.now(tz=config.tz_brazil))
         em.set_footer(text=guild.name, icon_url=guild.icon.url)
 
