@@ -73,6 +73,7 @@ class Economia(commands.Cog):
     loja = app_commands.Group(
         name='loja', description='Comandos da Loja Cósmica', guild_only=True)
 
+    @commands.guild_only()
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
 
