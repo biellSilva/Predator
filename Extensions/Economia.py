@@ -94,15 +94,6 @@ class Economia(commands.Cog):
 
         valor = random.randrange(1, msg)
         await add_banco(user, valor)
-        
-        em = discord.Embed(title='Mensagem',
-                           color=config.roxo,
-                           description=f'{user.mention} recebeu `{valor}`',
-                           timestamp=datetime.datetime.now(tz=tz_brazil))
-        em.set_footer(text=f'{user}', icon_url=f'{user.display_avatar.url}')
-
-        log = message.guild.get_channel(config.loja_log)
-        await log.send(embed=em)
         return
 
     @commands.Cog.listener()
@@ -111,7 +102,7 @@ class Economia(commands.Cog):
         if member.bot:
             return
 
-        if after.channel == None:
+        if after.channel is None:
             return
 
         if after.afk:
@@ -126,17 +117,6 @@ class Economia(commands.Cog):
             valor = random.randrange(1, 100)
             await add_banco(member, valor)
 
-            em = discord.Embed(title=f'Voice',
-                               color=config.roxo,
-                               description=f'{member.mention} recebeu `{valor}`',
-                               timestamp=datetime.datetime.now(tz=tz_brazil))
-
-            em.set_footer(text=f'{member}', icon_url=f'{member.display_avatar.url}')
-
-            guild: discord.Guild = self.bot.get_guild(config.uniao)
-            log = guild.get_channel(config.loja_log)
-
-            await log.send(embed=em)
             await asyncio.sleep(600)
 
     @banco.command(name='conta')
@@ -206,7 +186,6 @@ class Economia(commands.Cog):
 
         guild = interaction.guild
         user = interaction.user
-        log = guild.get_channel(config.loja_log)
 
         await open_account(user)
 
@@ -218,18 +197,11 @@ class Economia(commands.Cog):
                            description=f'{user.display_name}, recebeu `{diario} UCredits` pelo login diário',
                            timestamp=datetime.datetime.now(tz=tz_brazil))
 
-        em.set_thumbnail(
-            url='https://cdn.discordapp.com/emojis/629264485273698325.webp')
+        em.set_thumbnail(url='https://cdn.discordapp.com/emojis/629264485273698325.webp')
         em.set_footer(text=f'Registrado em {guild}', icon_url=f'{guild.icon}')
-        em.timestamp = datetime.datetime.now(tz=tz_brazil)
-
-        em1 = discord.Embed(title=f'Login diário',
-                            color=config.roxo,
-                            description=f'{user.mention} recebeu {diario}')
-        em1.timestamp = datetime.datetime.now(tz=tz_brazil)
 
         await interaction.response.send_message(embed=em)
-        await log.send(embed=em1)
+
 
     @login.error
     async def login_error(self, interaction: discord.Interaction, err):
@@ -388,7 +360,7 @@ class Economia(commands.Cog):
             if bal < valor:
                 em = discord.Embed(title=f'Sem Saldo',
                                    color=config.roxo,
-                                   description=f'{user.display_avatar}, você não possui UCredits suficientes')
+                                   description=f'{user.display_name}, você não possui UCredits suficientes')
                 em.add_field(name='Balanço atual', value=f'{bal}')
                 em.set_thumbnail(
                     url='https://cdn.discordapp.com/emojis/629264485273698325.webp')
@@ -426,7 +398,7 @@ class Economia(commands.Cog):
             if bal < valor:
                 em = discord.Embed(title=f'Sem Saldo',
                                    color=config.roxo,
-                                   description=f'{user.display_avatar}, você não possui UCredits suficientes')
+                                   description=f'{user.display_name}, você não possui UCredits suficientes')
                 em.add_field(name='Balanço atual', value=f'{bal}')
                 em.set_thumbnail(
                     url='https://cdn.discordapp.com/emojis/629264485273698325.webp')
